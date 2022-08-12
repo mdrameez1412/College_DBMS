@@ -1,0 +1,42 @@
+TRIGGERS makes the database smarter. Here are some triggers represented.
+
+
+first trigger:
+
+              CREATE TRIGGER `inc`
+              AFTER INSERT ON `classroom`
+              FOR EACH ROW
+              UPDATE `class` JOIN `classroom`
+              SET `class`.`CLASS_STRENGTH` = `class`.`CLASS_STRENGTH` + 1
+              WHERE `class`.`CLASS_ID`=`classroom`.`CLASS_ID`;
+
+
+In the above trigger , if we assign a student to a particular class, the respective CLASS_STRENGTH will be incremented by 1 , considering the student to be added
+to that particular class.
+
+
+second trigger:
+
+              CREATE TRIGGER `dec`
+              AFTER DELETE ON `classroom`
+              FOR EACH ROW
+              UPDATE `class` JOIN `classroom`
+              SET `class`.`CLASS_STRENGTH` = `class`.`CLASS_STRENGTH` - 1
+              WHERE `class`.`CLASS_ID`=`classroom`.`CLASS_ID`;
+
+
+
+
+
+              CREATE TRIGGER `sec_new`
+              AFTER INSERT ON `result`
+	            FOR EACH ROW BEGIN
+              INSERT INTO security (STUDENT_ID, CHANGE_TYPE) VALUES (NEW.id, 'INSERT');
+              END$$
+
+
+
+
+
+
+CREATE TRIGGER `ins_sec` AFTER INSERT ON `result` FOR EACH ROW INSERT INTO security (STUDENT_ID, CHANGE_TYPE) VALUES (`result`.`STUDENT_ID`, 'INSERT');

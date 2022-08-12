@@ -1,0 +1,171 @@
+At first let us create a database named student with the following command
+
+              CREATE DATABASE STUDENT;
+
+
+Then we will start creating tables by commands
+
+              CREATE TABLE PARENT (
+              PARENT_ID INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+              PARENT_NAME VARCHAR(25),
+              PARENT_GENDER VARCHAR(10),
+              PARENT_AGE INTEGER,
+              PARENT_OCCUPATION VARCHAR(25),
+              PARENT_INCOME INTEGER,
+              PARENT_MOBILE INTEGER
+              ) ENGINE = INNODB;
+
+
+
+              CREATE TABLE STUDENT (
+              STUDENT_ID INTEGER NOT NULL PRIMARY KEY,
+              STUDENT_F_NAME VARCHAR(25),
+              STUDENT_L_NAME VARCHAR(25),
+              STUDENT_GENDER VARCHAR(10),
+              DATE_OF_BIRTH DATE,
+              BLOOD_GROUP VARCHAR(255),
+              PARENT_ID INTEGER,
+
+              CONSTRAINT FOREIGN KEY (PARENT_ID)
+              REFERENCES PARENT (PARENT_ID)
+              ON DELETE CASCADE ON UPDATE CASCADE
+              ) ENGINE = INNODB;
+
+
+
+              CREATE TABLE ATTENDANCE (
+              ENTRY_NO INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
+              STUDENT_ID INTEGER ,
+              TOTAL_NO_OF_DAYS INTEGER,
+              NO_OF_DAYS_PRESENT INTEGER,
+              CONSTRAINT FOREIGN KEY(STUDENT_ID)
+              REFERENCES STUDENT(STUDENT_ID)
+              ON DELETE CASCADE ON UPDATE CASCADE
+              ) ENGINE = INNODB;
+
+
+
+              CREATE TABLE TEACHER (
+              TEACHER_ID INTEGER NOT NULL PRIMARY KEY,
+              TEACHER_F_NAME VARCHAR(25),
+              TEACHER_L_NAME VARCHAR(25),
+              TEACHER_GENDER VARCHAR(10),
+              TEACHER_AGE INTEGER,
+              TEACHER_MOBILE INTEGER,
+              TEACHER_SUBJECT_SPECIALISED VARCHAR(25),
+              )ENGINE = INNODB;
+
+
+
+              CREATE TABLE EXAM (
+              EXAM_ID INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+              EXAM_TYPE VARCHAR(25),
+              START_DATE VARCHAR(25)
+              )ENGINE = INNODB;
+
+
+
+              CREATE TABLE COURSE (
+              COURSE_ID INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+              COURSE_NAME VARCHAR(25),
+              TEACHER_ID INTEGER,
+              CONSTRAINT FOREIGN KEY(TEACHER_ID)
+              REFERENCES TEACHER(TEACHER_ID)
+              ON DELETE CASCADE ON UPDATE CASCADE
+              )ENGINE = INNODB;
+
+
+
+              CREATE TABLE RESULT (
+              ENTRY_NO INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
+              EXAM_ID INTEGER,
+              STUDENT_ID INTEGER,
+              COURSE_ID INTEGER,
+              MARKS INTEGER,
+              CONSTRAINT FOREIGN KEY(STUDENT_ID)
+              REFERENCES STUDENT(STUDENT_ID)
+              ON DELETE CASCADE ON UPDATE CASCADE,
+              CONSTRAINT FOREIGN KEY(EXAM_ID)
+              REFERENCES EXAM(EXAM_ID)
+              ON DELETE CASCADE ON UPDATE CASCADE,
+              CONSTRAINT FOREIGN KEY(COURSE_ID)
+              REFERENCES COURSE(COURSE_ID)
+              ON DELETE CASCADE ON UPDATE CASCADE
+              )ENGINE = INNODB;
+
+
+              CREATE TABLE CLASSROOM (
+
+              ENTRY_NO INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
+              STUDENT_ID INTEGER,
+              CLASS_ID INTEGER,
+
+              CONSTRAINT FOREIGN KEY(STUDENT_ID)
+              REFERENCES STUDENT(STUDENT_ID)
+              ON DELETE CASCADE ON UPDATE CASCADE,
+              CONSTRAINT FOREIGN KEY(CLASS_ID)
+              REFERENCES CLASS(CLASS_ID)
+              ON DELETE CASCADE ON UPDATE CASCADE
+              )ENGINE = INNODB;
+
+
+
+
+                CREATE TABLE STUDENTCOURSE(
+                ENTRY_NO INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
+                STUDENT_ID INTEGER,
+                COURSE_ID INTEGER,
+                CONSTRAINT FOREIGN KEY(STUDENT_ID)
+                REFERENCES STUDENT(STUDENT_ID)
+                ON DELETE CASCADE ON UPDATE CASCADE,
+                CONSTRAINT FOREIGN KEY(COURSE_ID)
+                REFERENCES COURSE(COURSE_ID)
+                ON DELETE CASCADE ON UPDATE CASCADE
+                )ENGINE = INNODB;
+
+
+
+              CREATE TABLE CLASS (
+              CLASS_ID INTEGER NOT NULL PRIMARY KEY ,
+              CLASS_AND_SECTION VARCHAR(10),
+              CLASS_STRENGTH INTEGER,
+              CLASS_ADVISOR_ID INTEGER,
+              CONSTRAINT FOREIGN KEY(CLASS_ADVISOR_ID)
+              REFERENCES TEACHER(TEACHER_ID)
+              ON DELETE CASCADE ON UPDATE CASCADE,
+              )ENGINE = INNODB;
+
+
+
+
+              CREATE TABLE FEES (
+
+              STUDENT_ID INTEGER,
+              FIRST_TERM VARCHAR(25),
+              SECOND_TERM VARCHAR(25),
+              THIRD_TERM VARCHAR(25),
+
+              CONSTRAINT FOREIGN KEY(STUDENT_ID)
+              REFERENCES STUDENT(STUDENT_ID)
+              ON DELETE CASCADE ON UPDATE CASCADE
+              )ENGINE = INNODB;
+
+
+
+
+
+              CREATE TABLE SECURITY (
+	             ENTRY_ID INTEGER NOT NULL  PRIMARY KEY AUTO_INCREMENT,
+	             STUDENT_ID INTEGER,
+	             CHANGE_TYPE enum('NEW','EDIT','DELETE'),
+	             CHANGE_TIME timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                  CONSTRAINT FOREIGN KEY(STUDENT_ID)
+                  REFERENCES STUDENT(STUDENT_ID)
+                  ON DELETE CASCADE ON UPDATE CASCADE
+                ) ENGINE=INNODB;
+
+
+
+
+
+By this we have created 11 tables. As a next step we start populating all the 10 tables.

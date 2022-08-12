@@ -1,0 +1,53 @@
+CREATE VIEW first_term_fee
+AS
+SELECT `fees`.`STUDENT_ID`,`student`.`STUDENT_F_NAME`,`student`.`STUDENT_L_NAME`
+FROM
+fees join student
+WHERE
+`fees`.`FIRST_TERM`="pending" AND `fees`.`STUDENT_ID`=`student`.`STUDENT_ID`;
+
+
+
+
+
+
+
+
+
+CREATE VIEW second_term_fee
+AS
+SELECT `fees`.`STUDENT_ID`,`student`.`STUDENT_F_NAME`,`student`.`STUDENT_L_NAME`
+FROM
+fees join student
+WHERE
+`fees`.`SECOND_TERM` ="pending" AND `fees`.`STUDENT_ID`=`student`.`STUDENT_ID`;
+
+
+
+
+
+
+
+
+CREATE VIEW third_term_fee
+AS
+SELECT `fees`.`STUDENT_ID`,`student`.`STUDENT_F_NAME`,`student`.`STUDENT_L_NAME`
+FROM
+fees join student
+WHERE
+`fees`.`THIRD_TERM` ="pending" AND `fees`.`STUDENT_ID`=`student`.`STUDENT_ID`;
+
+
+
+
+
+
+
+
+CREATE VIEW failure
+AS
+SELECT `result`.`STUDENT_ID`,`student`.`STUDENT_F_NAME`,`student`.`STUDENT_L_NAME`,`exam`.`EXAM_TYPE`,`course`.`COURSE_NAME`
+FROM
+result join student join exam join course
+WHERE
+`result`.`STUDENT_ID`=`student`.`STUDENT_ID` AND `result`.`EXAM_ID`=`exam`.`EXAM_ID` AND `result`.`COURSE_ID`=`course`.`COURSE_ID` AND `result`.`MARKS`<36;
